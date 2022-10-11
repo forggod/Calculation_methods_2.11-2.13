@@ -6,13 +6,7 @@ if ex == 11:
     e = 0.5e-8
 
 
-    def xchange(x):
-        if x < 1:
-            x += 0.1
-        return x
-
-
-    def nonReduced():
+    def nonReduced(x):
         #                    ----
         #                    \        1
         #       f(x) =        ---  --------
@@ -20,9 +14,8 @@ if ex == 11:
         #                    ----
 
         sum, avr, k = 0.0, 0.0, 1
-        x, counter = 0, 0
+        counter = 0
         while k:
-            x = xchange(x)
             avr = 1 / (k * (k + x))
             sum += avr
             k += 1
@@ -32,7 +25,7 @@ if ex == 11:
         return counter, sum - 1
 
 
-    def onReduced():
+    def onReduced(x):
         #                         ----
         #                         \          1
         #       f(x) =  (1-x)  *   ---  ------------
@@ -40,23 +33,29 @@ if ex == 11:
         #                         ----
 
         sum, avr, k = 0.0, 0.0, 1
-        x, counter = 0, 0
+        counter =0
         while k:
-            x = xchange(x)
             avr = 1 / (k * (k + 1) * (k + x))
             sum += avr
             k += 1
             if avr < e:
                 counter = k - 1
                 k = 0
-        return counter, sum
+        return counter, (1-x)*sum
 
-
-    nred = nonReduced()
+    x = 0.9
+    print('X =', x)
+    nred = nonReduced(x)
     print('Not reduced', 'N = ' + str(nred[0]), nred[1], sep='\n')
-    red = onReduced()
-    func = (1 - 0.1) * red[1]
-    print('Reduced', 'N = ' + str(red[0]), func, sep='\n')
+    red = onReduced(x)
+    print('Reduced', 'N = ' + str(red[0]), red[1], sep='\n')
+    print()
+    x = 0.5
+    print('X =', x)
+    nred = nonReduced(x)
+    print('Not reduced', 'N = ' + str(nred[0]), nred[1], sep='\n')
+    red = onReduced(x)
+    print('Reduced', 'N = ' + str(red[0]), red[1], sep='\n')
 
 
 elif ex == 12:
